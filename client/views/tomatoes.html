@@ -1,0 +1,46 @@
+<!--TODO: INLINE CSS TO CSS CLASSES-->
+<!--TODO: ngAnimate!-->
+<div class="container" ng-controller="tomatoesCtrl">
+    <div class="row">
+        <div class="col s12">
+            <h1 class="left">History</h1>
+
+            <h1 class="right">
+                <a class="btn-floating btn-large waves-effect waves-light red" style="font-size: 35px"
+                   ng-if="!isCreating()" ng-click="createEntry()">+</a>
+                <a class="btn-floating btn-large waves-effect waves-light red" style="font-size: 20px"
+                   ng-if="isCreating()" ng-click="cancelEntry()">x</a>
+                </a>
+            </h1>
+        </div>
+        <div class="col s12" style="margin-top: 2%;">
+            <table ng-click="createEntry()" class="hoverable" style="cursor: pointer;">
+                <thead>
+                <tr>
+                    <th data-field="id" style="width: 200px;">Date</th>
+                    <th data-field="name" >Description</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="tomato in listOfTomatoes">
+                    <td ng-bind="tomato.date | date:'medium'"></td>
+                    <td ng-bind="tomato.description"></td>
+                </tr>
+                <tr ng-if="listOfTomatoes.length == 0">
+                    <td>No work has been logged.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12 center">
+            <form class="input-field col s12" ng-if="isCreating()">
+                <input id="uktena-new-tomato-description" type="text" class="validate" maxlength="250"
+                       ng-model="tomatoDescription">
+                <label for="uktena-new-tomato-description">Description</label>
+                <button type="submit" id="uktena-tomato-done-{{$index}}" class="waves-effect waves-light btn"
+                   ng-click="submitEntry(tomatoDescription)">Done</button>
+            </form>
+        </div>
+    </div>
+</div>

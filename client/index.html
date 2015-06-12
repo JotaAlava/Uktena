@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/materialize/bin/materialize.css" />
+    <!-- endbower -->
+</head>
+<body ng-app="uktena">
+<nav class="container">
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Uktena</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <!--<li><a href="sass.html">Sass</a></li>-->
+            <li><a href="#tomatoes">Tomatoes</a></li>
+            <!--<li><a href="#history">Logs</a></li>-->
+        </ul>
+    </div>
+</nav>
+    <ui-view></ui-view>
+</body>
+<!-- Bower is for third party js libraries -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/materialize/bin/materialize.js"></script>
+<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<!-- endbower -->
+
+<!-- Inject is for our app specific js files -->
+<!-- inject:js -->
+<script src="js/testingHelpers.js"></script>
+<script src="js/app/uktena.js"></script>
+<script src="js/app/uktena/appConfig.js"></script>
+<script src="js/app/uktena/homeCtrl.js"></script>
+<script src="js/app/uktena/timerSvc.js"></script>
+<script src="js/app/uktena/tomatoesCtrl.js"></script>
+<script src="js/app/uktena/tomatoesSvc.js"></script>
+<script src="js/app/modules/http/uktenaHttp.js"></script>
+<script src="js/app/modules/http/services/httpSvc.js"></script>
+<!-- endinject -->
+</html>

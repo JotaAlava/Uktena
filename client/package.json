@@ -1,0 +1,38 @@
+{
+  "name": "Uktena",
+  "version": "1.0.0",
+  "description": "Mythological Productivity",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Productivity",
+    "Pomodoro"
+  ],
+  "author": "Jose Alava (jalava85@gmail.com)",
+  "license": "Apache ",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "gulp": "^3.8.11",
+    "gulp-inject": "^1.2.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-print": "^1.1.0",
+    "gulp-if": "^1.2.5",
+    "gulp-jshint": "^1.10.0",
+    "gulp-jscs": "^1.5.1",
+    "jshint-stylish": "^1.0.1",
+    "gulp-util": "^3.0.4",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.2.4",
+    "sinon": "^1.14.1",
+    "wiredep": "^2.2.2",
+    "yargs": "^3.8.0"
+  }
+}
