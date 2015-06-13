@@ -4,9 +4,11 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
+var print = require('gulp-print');
 
 gulp.task('test', function() {
     return gulp.src(['tests/**/*.js'], { read: false })
+        .pipe(print())
         .pipe(mocha({ reporter: 'list' }))
         .on('error', gutil.log);
 });

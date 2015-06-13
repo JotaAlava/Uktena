@@ -25,8 +25,8 @@ var config = function () {
             self.web = {
                 port:process.env.WEB_PORT || 667
             };
-            self.uktenaDb = 'uktenatest';
-            self.tomatoCollection = 'routines';
+            self.uktenaDb = 'uktena';
+            self.tomatoCollection = 'tomato';
             break;
     }
 
