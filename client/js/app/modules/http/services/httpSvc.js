@@ -4,7 +4,7 @@
 angular.module('uktenaHttp')
     .factory('httpSvc', ['$http', function ($http) {
         var self = this,
-            apiUrl = 'http://localhost:3579/'; // TODO: Add this to application config
+            apiUrl = 'http://localhost:667/'; // TODO: Add this to application config
 
         self.requestWithoutData = function (verb, url) {
             var request = $http({

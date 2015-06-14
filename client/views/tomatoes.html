@@ -23,11 +23,11 @@
                 </thead>
 
                 <tbody>
-                <tr ng-repeat="tomato in listOfTomatoes">
-                    <td ng-bind="tomato.date | date:'medium'"></td>
+                <tr ng-repeat="tomato in listOfTomatoes()">
+                    <td ng-bind="tomato.dateCreated | date:'medium'"></td>
                     <td ng-bind="tomato.description"></td>
                 </tr>
-                <tr ng-if="listOfTomatoes.length == 0">
+                <tr ng-if="listOfTomatoes().length == 0">
                     <td>No work has been logged.</td>
                 </tr>
                 </tbody>

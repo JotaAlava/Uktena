@@ -4,7 +4,9 @@
 angular.module('uktena')
     .controller('tomatoesCtrl', ['$scope', 'tomatoesSvc', 'appConfig', '$timeout', function ($scope, tomatoesSvc, appConfig, $timeout) {
         var isCreating = false;
-        $scope.listOfTomatoes = [];
+        $scope.listOfTomatoes = function () {
+            return tomatoesSvc.get();
+        };
 
         $scope.createEntry = function () {
             setIsCreatingToTrue();
@@ -19,11 +21,12 @@ angular.module('uktena')
         };
 
         $scope.submitEntry = function (tomatoDescription) {
-            $scope.listOfTomatoes.push({
-                date: new Date(),
+            var newTomato = {
+                dateCreated: new Date(),
                 description: tomatoDescription
-            });
+            };
 
+            tomatoesSvc.create(newTomato);
             setIsCreatingToFalse();
         };
 

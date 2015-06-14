@@ -21,6 +21,7 @@ describe('tomatoesCtrl', function(){
     });
 
     it('listOfTomatoes is exposed to the scope and has default length of 0', function() {
+        // Update to make sure the value is retunred from the service
         // Assert
         scope.listOfTomatoes.should.be.ok;
         scope.listOfTomatoes.length.should.equal(0);

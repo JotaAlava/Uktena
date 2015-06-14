@@ -12,7 +12,10 @@ angular.module('uktena', ['ui.router', 'uktenaHttp'])
                 .state('tomatoes', {
                     url: '/tomatoes',
                     templateUrl: 'views/tomatoes.html',
-                    controller: 'tomatoesCtrl'
+                    controller: 'tomatoesCtrl',
+                    onEnter: function (tomatoesSvc) {
+                        tomatoesSvc.load();
+                    }
                 });
 
             $urlRouterProvider.otherwise('');

@@ -55,7 +55,7 @@ module.exports = function(config) {
 
 
     // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // possible values: modules.LOG_DISABLE || modules.LOG_ERROR || modules.LOG_WARN || modules.LOG_INFO || modules.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
 
