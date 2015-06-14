@@ -11,23 +11,20 @@ var mongoRepository = function (mongoConnectionString, nameOfDb, optionalNameOfC
         connectionString = mongoConnectionString + dbName,
         collectionName = optionalNameOfCollection;
 
-    self.findAll = function (res) {
+    self.findAll = function (predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).find().toArray(function (err, queryResult) {
-                res.send(queryResult);
-                db.close();
+                predicate(err, queryResult);
             });
         });
     };
 
-    self.findOne = function (query, res) {
+    self.findOne = function (query, predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).findOne(query, function (err, queryResult) {
-                console.log('Found none with that query: ' + queryResult);
-                console.log(queryResult);
-                res.send(queryResult);
-                db.close();
+                predicate(err, queryResult);
             });
+            // What happens if we never call db.close();?
         });
     };
 
@@ -45,13 +42,10 @@ var mongoRepository = function (mongoConnectionString, nameOfDb, optionalNameOfC
         });
     };
 
-    self.insert = function (documentToAdd, res) {
+    self.insert = function (documentToAdd, predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).insert(documentToAdd, function (err, queryResult) {
-                var documentAdded = queryResult.ops[0];
-                console.log('Document added is ' + documentAdded);
-                res.send(documentAdded);
-                db.close();
+                predicate(err, queryResult);
             });
         });
     };
@@ -80,22 +74,18 @@ var mongoRepository = function (mongoConnectionString, nameOfDb, optionalNameOfC
         });
     };
 
-    self.removeById = function (idOfDocumentToDelete, res) {
+    self.removeById = function (idOfDocumentToDelete, predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).remove({_id : new mongodb.ObjectID(idOfDocumentToDelete)}, function (err, queryResult) {
-                console.log('Document deleted had an id of: ' + idOfDocumentToDelete);
-                res.send(idOfDocumentToDelete);
-                db.close();
+                predicate(err, queryResult);
             });
         });
     };
 
-    self.removeAll = function (res) {
+    self.removeAll = function (predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).remove({}, function (err, queryResult) {
-                console.log('All documents have been deleted!');
-                res.send('All documents have been deleted!');
-                db.close();
+                predicate(err, queryResult);
             });
         });
     };

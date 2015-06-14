@@ -4,7 +4,7 @@
 var should = require("chai").should(),
     TomatoCtor = require('../../../lib/models/tomato');
 
-describe('tomato', function () {
+describe('tomato model', function () {
     it('will be created with a default date of today and a blank description when built without parameters', function () {
         // Arrange
         var expectedDate = new Date();
