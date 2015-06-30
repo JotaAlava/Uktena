@@ -31,38 +31,6 @@ describe('tomatoesCtrl', function(){
         scope.createEntry.should.be.ok;
     });
 
-    it('submitEntry adds an entry with a property Date (today\'s date) & a property Description with value equal to parameter', function() {
-        // Arrange
-        var testDescription = 'test';
-
-        // Act
-        scope.submitEntry(testDescription);
-
-        // Assert
-        scope.listOfTomatoes.length.should.equal(1);
-        scope.listOfTomatoes[0].date.getDate().should.equal(new Date().getDate());
-        scope.listOfTomatoes[0].date.getDay().should.equal(new Date().getDay());
-
-        scope.listOfTomatoes[0].date.getFullYear().should.equal(new Date().getFullYear());
-        scope.listOfTomatoes[0].description.should.equal(testDescription);
-    });
-
-    it('submitEntry when invoked without parameters will not add an entry', function() {
-        // Arrange
-        var testDescription = 'test';
-
-        // Act
-        scope.submitEntry(testDescription);
-
-        // Assert
-        scope.listOfTomatoes.length.should.equal(1);
-        scope.listOfTomatoes[0].date.getDate().should.equal(new Date().getDate());
-        scope.listOfTomatoes[0].date.getDay().should.equal(new Date().getDay());
-
-        scope.listOfTomatoes[0].date.getFullYear().should.equal(new Date().getFullYear());
-        scope.listOfTomatoes[0].description.should.equal(testDescription);
-    });
-
     it('submitEntry when invoked without parameters will toast the user "Description required!"', function() {
         // ...
     });
@@ -134,7 +102,8 @@ describe('tomatoesCtrl', function(){
 
         // Act
         scope.createEntry();
-        scope.submitEntry();
+        scope.submitEntry('someDescription');
+        $httpBackend.expectPOST("http://localhost:667/tomato").respond('test');
         $httpBackend.whenGET("views/main.html").respond('test');
 
         $timeout.flush();

@@ -2,7 +2,7 @@
  * Created by Jose on 5/2/2015.
  */
 angular.module('uktena')
-    .factory('tomatoesSvc', ['appConfig', 'httpSvc', function (appConfig, httpSvc) {
+    .factory('tomatoesSvc', ['appConfig', 'httpSvc', 'authSvc', function (appConfig, httpSvc, authSvc) {
         var self = this,
             listOfTomatoes = [];
 
@@ -14,7 +14,7 @@ angular.module('uktena')
         };
 
         self.load = function () {
-            return httpSvc.requestWithoutData('GET', 'tomato')
+            return httpSvc.requestWithoutData('GET', 'tomato/' + authSvc.isAuthenticated())
                 .success(function (res) {
                     listOfTomatoes = res;
                 });

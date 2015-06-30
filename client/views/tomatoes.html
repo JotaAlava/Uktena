@@ -1,7 +1,7 @@
 <!--TODO: INLINE CSS TO CSS CLASSES-->
 <!--TODO: ngAnimate!-->
 <div class="container" ng-controller="tomatoesCtrl">
-    <div class="row">
+    <div class="row" ng-if="isAuthenticated()">
         <div class="col s12">
             <h1 class="left">History</h1>
 
@@ -18,7 +18,7 @@
                 <thead>
                 <tr>
                     <th data-field="id" style="width: 200px;">Date</th>
-                    <th data-field="name" >Description</th>
+                    <th data-field="name">Description</th>
                 </tr>
                 </thead>
 
@@ -39,8 +39,62 @@
                        ng-model="tomatoDescription">
                 <label for="uktena-new-tomato-description">Description</label>
                 <button type="submit" id="uktena-tomato-done-{{$index}}" class="waves-effect waves-light btn"
-                   ng-click="submitEntry(tomatoDescription)">Done</button>
+                        ng-click="submitEntry(tomatoDescription)">Done
+                </button>
             </form>
+        </div>
+    </div>
+    <div class="row" ng-if="!isAuthenticated()">
+        <div class="col s6">
+            <div class="row">
+                <div class="card" ng-style="cards['logIn']">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4" ng-click="setCardStyle('logIn')">Log In</span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4" ng-click="clearCardStyle('logIn')">Log In</span>
+
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="first_name" type="text" class="validate" ng-model="email">
+                                    <label for="first_name">EMail</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="last_name" type="text" class="validate" ng-model="password">
+                                    <label for="last_name">Password</label>
+                                </div>
+                                <input class="waves-effect waves-light btn right" type="submit" ng-click="logIn(email, password)"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="row">
+                <div class="card" ng-style="cards['register']">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4" ng-click="setCardStyle('register')">Register</span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4" ng-click="clearCardStyle('register')">Register</span>
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="first_name" type="text" class="validate">
+                                    <label for="first_name">EMail</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="last_name" type="text" class="validate">
+                                    <label for="last_name">Password</label>
+                                </div>
+                                <input class="waves-effect waves-light btn right" type="submit"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

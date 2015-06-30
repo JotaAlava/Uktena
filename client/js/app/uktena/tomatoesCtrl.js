@@ -2,7 +2,7 @@
  * Created by Jose on 6/4/2015.
  */
 angular.module('uktena')
-    .controller('tomatoesCtrl', ['$scope', 'tomatoesSvc', 'appConfig', '$timeout', function ($scope, tomatoesSvc, appConfig, $timeout) {
+    .controller('tomatoesCtrl', ['$scope', 'tomatoesSvc', 'authSvc', '$timeout', function ($scope, tomatoesSvc, authSvc, $timeout) {
         var isCreating = false;
         $scope.listOfTomatoes = function () {
             return tomatoesSvc.get();
@@ -21,7 +21,10 @@ angular.module('uktena')
         };
 
         $scope.submitEntry = function (tomatoDescription) {
+            if (!tomatoDescription) return;
+
             var newTomato = {
+                author: authSvc.isAuthenticated(),
                 dateCreated: new Date(),
                 description: tomatoDescription
             };
@@ -29,6 +32,34 @@ angular.module('uktena')
             tomatoesSvc.create(newTomato);
             setIsCreatingToFalse();
         };
+
+
+        $scope.setCardStyle = function (cardToStyle) {
+            $scope.cards[cardToStyle] = expandedCard;
+        };
+
+        $scope.clearCardStyle = function (cardToStyle) {
+            $scope.cards[cardToStyle] = {};
+        };
+
+        $scope.cards = {
+            logIn: {},
+            register: {}
+        };
+
+        $scope.logIn = function (username, password) {
+            var params = {
+                username: username,
+                password: password
+            };
+            authSvc.logIn(params);
+        };
+
+        $scope.isAuthenticated = function () {
+            return authSvc.isAuthenticated();
+        }
+
+        var expandedCard = {'height': '210px'};
 
         var setIsCreatingToTrue = function () {
             isCreating = true;
