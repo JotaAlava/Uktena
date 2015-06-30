@@ -10,8 +10,8 @@ module.exports = function() {
         },
         locationOfIndexHtml: './index.html',
         destinationOfWiredepedFile: './',
-        allTheJs: './js/**/*.js',
-        allTheTestsJs: './test/**/*.js'
+        allTheJs: '../client//js/**/*.js',
+        allTheTestsJs: '../client/**/*.js'
     };
 
     return config;
