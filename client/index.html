@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <title></title>
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/materialize/bin/materialize.css" />
+    <link rel="stylesheet" href="bower_components/materialize/bin/materialize.css"/>
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
     <!-- endbower -->
 </head>
 <body ng-app="uktena">
-<nav class="container">
+<nav class="container" ng-controller="navCtrl">
     <div class="nav-wrapper">
         <a href="#" class="brand-logo">Uktena</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <!--<li><a href="sass.html">Sass</a></li>-->
-            <li><a href="#tomatoes">Tomatoes</a></li>
-            <!--<li><a href="#history">Logs</a></li>-->
+            <li><a href="#tomatoes" style="cursor: pointer;">Tomatoes</a></li>
         </ul>
     </div>
 </nav>
-    <ui-view></ui-view>
+<ui-view></ui-view>
 </body>
 <!-- Bower is for third party js libraries -->
 <!-- bower:js -->
@@ -28,6 +28,8 @@
 <script src="bower_components/materialize/bin/materialize.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/toastr/toastr.js"></script>
 <!-- endbower -->
 
 <!-- Inject is for our app specific js files -->
@@ -36,10 +38,18 @@
 <script src="js/app/uktena.js"></script>
 <script src="js/app/uktena/appConfig.js"></script>
 <script src="js/app/uktena/homeCtrl.js"></script>
+<script src="js/app/uktena/navCtrl.js"></script>
+<script src="js/app/uktena/logInCtrl.js"></script>
 <script src="js/app/uktena/timerSvc.js"></script>
 <script src="js/app/uktena/tomatoesCtrl.js"></script>
 <script src="js/app/uktena/tomatoesSvc.js"></script>
+<script src="js/app/uktena/authSvc.js"></script>
+<script src="js/app/uktena/cookieSvc.js"></script>
+<script src="js/app/uktena/jQuerySvc.js"></script>
 <script src="js/app/modules/http/uktenaHttp.js"></script>
 <script src="js/app/modules/http/services/httpSvc.js"></script>
+<script src="js/app/uktena/feedbackSvc.js"></script>
 <!-- endinject -->
+<script>
+</script>
 </html>
