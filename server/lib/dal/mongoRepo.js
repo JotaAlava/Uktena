@@ -28,8 +28,15 @@ var mongoRepository = function (mongoConnectionString, nameOfDb, optionalNameOfC
         });
     };
 
-    self.findById = function (id, res) {
-        self.findOne({_id : new mongodb.ObjectID(id)}, res);
+    self.find = function (query, predicate) {
+        mongoClient.connect(connectionString, function (err, db) {
+            //db.collection(collectionName || dbName).find(query, {explain:true}).toArray(function (err, queryResult) {
+            //    predicate(err, queryResult);
+            //});
+            db.collection(collectionName || dbName).find(query).toArray(function(err, queryResult){
+                predicate(err, queryResult);
+            });
+        });
     };
 
     self.getCount = function (res) {
