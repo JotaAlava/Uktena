@@ -8,6 +8,9 @@ function generateFakePromise() {
         },
         error: function (callback) {
             callback(5);
+        },
+        then: function (callback) {
+            callback(5);
         }
     };
 }

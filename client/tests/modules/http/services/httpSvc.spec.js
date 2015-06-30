@@ -6,8 +6,7 @@
  */
 'use strict';
 var httpSvc, sandbox, fakePromise, $http,
-    testEndPoint = 'testBaseRoute/someEndPoint',
-    testBaseUrl = 'http://localhost:3579/';
+    testEndPoint = 'testBaseRoute/someEndPoint';
 
 describe("httpSvc", function () {
     beforeEach(module('uktenaHttp'));
@@ -30,7 +29,8 @@ describe("httpSvc", function () {
 
         it('should return a promise.', function () {
             // Arrange
-            $http.whenGET(testBaseUrl + testEndPoint).respond(fakePromise);
+            // TODO: Get url for mocks from a central place for all tests
+            $http.whenGET('http://localhost:667/testBaseRoute/someEndPoint').respond(fakePromise);
 
             // Act
             var actualResult = httpSvc.requestWithoutData('get', testEndPoint);
