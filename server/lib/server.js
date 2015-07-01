@@ -6,7 +6,8 @@ var express = require('express'),
     session = require('express-session'),
     LocalStrategy = require('passport-local').Strategy,
     tomatoDb = new MongoRepo(config.mongoConnectionString, config.uktenaDb, config.tomatoCollection),
-    userDb = new MongoRepo(config.mongoConnectionString, config.uktenaDb, config.userCollection);
+    userDb = new MongoRepo(config.mongoConnectionString, config.uktenaDb, config.userCollection),
+    q = require('q');
 
 var cookieParser = require('cookie-parser');
 var app = express();
@@ -34,8 +35,28 @@ passport.use(new LocalStrategy(
 ));
 
 // Start routes...
-require('./modules/expressModule')(app, tomatoDb, 'tomato');
-require('./modules/expressModule')(app, userDb, 'user');
+function isValidHeader(header){
+    var result = q.defer();
+
+    userDb.findById(header, function (err, user) {
+        if (user) {
+            result.resolve(true);
+        } else{
+            result.resolve(false);
+        }
+    });
+
+    return result.promise;
+}
+
+require('./modules/expressModule')(app, userDb, 'user', {
+    authPredicate: isValidHeader,
+    capability: 'cr'
+});
+require('./modules/expressModule')(app, tomatoDb, 'tomato', {
+    authPredicate: isValidHeader,
+    capability: 'cRud'
+});
 
 app.post('/login', function (req, res, next) {
     var auth = passport.authenticate('local', function (err, user) {
@@ -57,22 +78,7 @@ app.post('/login', function (req, res, next) {
 });
 
 app.post('/logout', function (req, res, next) {
-    var auth = passport.authenticate('local', function (err, user) {
-        if (err === null && !user) {
-            return next('Invalid credentials!')
-        }
-        if(!err) {
-            req.logIn(user, function (err) {
-                if (err) {
-                    return next(err);
-                }
-
-                res.send({user:user});
-            });
-        }
-    });
-
-    auth(req, res, next);
+    // TODO: Implement...
 });
 
 passport.serializeUser(function (user, done) {

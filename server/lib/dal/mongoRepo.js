@@ -89,6 +89,14 @@ var mongoRepository = function (mongoConnectionString, nameOfDb, optionalNameOfC
         });
     };
 
+    self.findById = function (idOfDocumentToRetrieve, predicate) {
+        mongoClient.connect(connectionString, function (err, db) {
+            db.collection(collectionName || dbName).findOne({_id : new mongodb.ObjectID(idOfDocumentToRetrieve)}, function (err, queryResult) {
+                predicate(err, queryResult);
+            });
+        });
+    };
+
     self.removeAll = function (predicate) {
         mongoClient.connect(connectionString, function (err, db) {
             db.collection(collectionName || dbName).remove({}, function (err, queryResult) {
