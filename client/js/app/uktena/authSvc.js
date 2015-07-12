@@ -28,5 +28,23 @@ angular.module('uktena')
             return deferredResult;
         };
 
+        self.register = function (params) {
+            var deferredResult = q.defer();
+
+            httpSvc.requestWithDataAsBody('POST', 'register', params)
+                .success(function (res) {
+                    delete res._id;
+
+                    deferredResult.resolve(self.logIn(res));
+
+                    feedbackSvc.notify('Welcome To Uktena');
+                })
+                .error(function (res) {
+                    feedbackSvc.notify('Credentials in use or incomplete!');
+                });
+
+            return deferredResult;
+        };
+
         return self;
     }]);

@@ -52,12 +52,22 @@ angular.module('uktena')
                 username: username,
                 password: password
             };
+
             authSvc.logIn(params);
+        };
+
+        $scope.register = function (username, password) {
+            var params = {
+                username: username,
+                password: password
+            };
+
+            authSvc.register(params);
         };
 
         $scope.isAuthenticated = function () {
             return authSvc.isAuthenticated();
-        }
+        };
 
         var expandedCard = {'height': '210px'};
 

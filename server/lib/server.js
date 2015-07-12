@@ -77,6 +77,19 @@ app.post('/login', function (req, res, next) {
     auth(req, res, next);
 });
 
+app.post('/register', function (req, res, next) {
+    userDb.findOne({username:req.body.username}, function (err, user) {
+        if (!user && req.body.username && req.body.password) {
+            userDb.insert(req.body, function (err, queryResult) {
+                res.send(queryResult.ops[0]);
+            });
+        } else{
+            res.status(400);
+            res.send('User has already registered!');
+        }
+    });
+});
+
 app.post('/logout', function (req, res, next) {
     // TODO: Implement...
 });

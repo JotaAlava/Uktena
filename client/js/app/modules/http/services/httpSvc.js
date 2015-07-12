@@ -6,23 +6,31 @@ angular.module('uktenaHttp')
         var self = this,
             apiUrl = 'http://localhost:667/'; // TODO: Add this to application config
 
-        self.requestWithoutData = function (verb, url) {
-            var request = $http({
+        self.requestWithoutData = function (verb, url, headers) {
+            var options = {
                 method: verb,
                 url: apiUrl + url
-            });
+            };
 
-            return request;
+            if(headers !== undefined) {
+                options.headers = headers
+            }
+
+            return $http(options);
         };
 
-        self.requestWithDataAsBody = function (verb, url, data) {
-            var request = $http({
+        self.requestWithDataAsBody = function (verb, url, data, headers) {
+            var options = {
                 method: verb,
                 url: apiUrl + url,
                 data: data
-            });
+            };
 
-            return request;
+            if(headers !== undefined) {
+                options.headers = headers
+            }
+
+            return $http(options);
         };
 
         self.requestWithDataAsQueryString = function (verb, url, data) {

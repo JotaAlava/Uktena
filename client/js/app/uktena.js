@@ -13,8 +13,10 @@ angular.module('uktena', ['ui.router', 'uktenaHttp'])
                     url: '/tomatoes',
                     templateUrl: 'views/tomatoes.html',
                     controller: 'tomatoesCtrl',
-                    onEnter: function (tomatoesSvc) {
-                        tomatoesSvc.load();
+                    onEnter: function (tomatoesSvc, authSvc) {
+                        if (authSvc.isAuthenticated()) {
+                            tomatoesSvc.load();
+                        }
                     }
                 });
 

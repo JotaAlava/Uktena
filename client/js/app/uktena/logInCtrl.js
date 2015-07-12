@@ -6,4 +6,8 @@ angular.module('uktena')
         $scope.logIn = function (username, password) {
             authSvc.logIn(username, password);
         };
+
+        $scope.register = function (username, password) {
+            authSvc.register(username, password);
+        };
     }]);

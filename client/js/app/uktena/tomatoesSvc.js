@@ -2,19 +2,28 @@
  * Created by Jose on 5/2/2015.
  */
 angular.module('uktena')
-    .factory('tomatoesSvc', ['appConfig', 'httpSvc', 'authSvc', function (appConfig, httpSvc, authSvc) {
+    .factory('tomatoesSvc', ['appConfig', 'httpSvc', 'authSvc', 'cookieSvc', function (appConfig, httpSvc, authSvc, cookieSvc) {
         var self = this,
             listOfTomatoes = [];
 
         self.create = function (newTomato) {
-            httpSvc.requestWithDataAsBody('POST', 'tomato', newTomato)
+            var headers = {
+                uktena: cookieSvc.get('uktena')
+            };
+
+            httpSvc.requestWithDataAsBody('POST', 'tomato', newTomato, headers)
                 .success(function (res) {
                     listOfTomatoes.push(res[0]);
                 });
         };
 
         self.load = function () {
-            return httpSvc.requestWithoutData('GET', 'tomato/' + authSvc.isAuthenticated())
+            var token = authSvc.isAuthenticated();
+            var headers = {
+                uktena: token
+            };
+
+            return httpSvc.requestWithoutData('GET', 'tomato/' + token, headers)
                 .success(function (res) {
                     listOfTomatoes = res;
                 });
