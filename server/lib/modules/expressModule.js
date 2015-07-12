@@ -8,7 +8,7 @@ module.exports = function (app, dbToUse, baseRoute, options) {
         app.get('/' + baseRoute, function (req, res) {
             options.authPredicate(req.headers.uktena).then(function (isAuth) {
                 if(isAuth) {
-                    dbToUse.findAll(function (err, result) {
+                    dbToUse.find(req.query, function (err, result) {
                         res.send(result);
                     });
                 } else {

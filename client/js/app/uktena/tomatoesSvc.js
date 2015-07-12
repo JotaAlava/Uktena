@@ -14,6 +14,12 @@ angular.module('uktena')
             httpSvc.requestWithDataAsBody('POST', 'tomato', newTomato, headers)
                 .success(function (res) {
                     listOfTomatoes.push(res[0]);
+                })
+                .error(function (res) {
+                    if (res === 'Unauthorized'){
+                        feedbackSvc.notify('Your session has expired!');
+                        authSvc.logOut();
+                    }
                 });
         };
 
@@ -23,14 +29,24 @@ angular.module('uktena')
                 uktena: token
             };
 
-            return httpSvc.requestWithoutData('GET', 'tomato/' + token, headers)
+            return httpSvc.requestWithDataAsQueryString('GET', 'tomato', {author: token},headers)
                 .success(function (res) {
                     listOfTomatoes = res;
+                })
+                .error(function (res) {
+                    if (res === 'Unauthorized'){
+                        feedbackSvc.notify('Your session has expired!');
+                        authSvc.logOut();
+                    }
                 });
         };
 
         self.get = function () {
             return listOfTomatoes;
+        };
+
+        self.clearTomatoes = function () {
+            listOfTomatoes = [];
         };
 
         return self;

@@ -33,14 +33,18 @@ angular.module('uktenaHttp')
             return $http(options);
         };
 
-        self.requestWithDataAsQueryString = function (verb, url, data) {
-            var request = $http({
+        self.requestWithDataAsQueryString = function (verb, url, data, headers) {
+            var options = {
                 method: verb,
                 url: apiUrl + url,
                 params: data
-            });
+            };
 
-            return request;
+            if(headers !== undefined) {
+                options.headers = headers
+            }
+
+            return $http(options);
         };
 
         return self;

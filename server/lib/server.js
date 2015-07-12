@@ -90,10 +90,6 @@ app.post('/register', function (req, res, next) {
     });
 });
 
-app.post('/logout', function (req, res, next) {
-    // TODO: Implement...
-});
-
 passport.serializeUser(function (user, done) {
     if(user) {
         done(null, user._id);

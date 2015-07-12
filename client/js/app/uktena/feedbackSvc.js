@@ -6,7 +6,7 @@ angular.module('uktena')
         var self = this;
 
         self.notify = function (message) {
-            Materialize.toast(message, 4000)
+            Materialize.toast(message, 500)
         };
 
         return self;

@@ -53,7 +53,9 @@ angular.module('uktena')
                 password: password
             };
 
-            authSvc.logIn(params);
+            authSvc.logIn(params, function () {
+                tomatoesSvc.load();
+            });
         };
 
         $scope.register = function (username, password) {

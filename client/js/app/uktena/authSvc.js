@@ -9,7 +9,8 @@ angular.module('uktena')
             return cookieSvc.get('uktena') || undefined;
         };
 
-        self.logIn = function (params) {
+        // TODO: Elaborate more on this pattern for handling angular svcs and delayed actions!
+        self.logIn = function (params, actionToExecutoAfterRequest) {
             var deferredResult = q.defer();
 
             httpSvc.requestWithDataAsBody('POST', 'login', params)
@@ -20,6 +21,7 @@ angular.module('uktena')
                     deferredResult.resolve(res);
 
                     feedbackSvc.notify('Logged in!');
+                    actionToExecutoAfterRequest();
                 })
                 .error(function (res) {
                     feedbackSvc.notify('Invalid credentials!');
@@ -45,6 +47,21 @@ angular.module('uktena')
 
             return deferredResult;
         };
+
+        self.logOut = function () {
+            deleteAllCookies();
+        };
+
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
 
         return self;
     }]);
