@@ -37,15 +37,18 @@ gulp.task('vet', function () {
  * Wire the client side dependencies into the index.html
  */
 gulp.task('wiredep', function () {
-    var wiredep = require('wiredep').stream,
-        //options = config.getWiredepDefaultOptions();
-        options = config.wiredepOptions;
-    log('starting wiredep');
-    return gulp
-        .src(config.locationOfIndexHtml) // Find the html we will throw into the pipeline
-        .pipe(wiredep(options))
-        .pipe($.inject(gulp.src(config.allTheJs), {relative: true}))
-        .pipe(gulp.dest(config.destinationOfWiredepedFile)); // Dump the resulting file into this folder
+    // TODO: Fix this task!
+    console.log('this is broken!')
+    console.log('fix it')
+    //var wiredep = require('wiredep').stream,
+    //    //options = config.getWiredepDefaultOptions();
+    //    options = config.wiredepOptions;
+    //log('starting wiredep');
+    //return gulp
+    //    .src(config.locationOfIndexHtml) // Find the html we will throw into the pipeline
+    //    .pipe(wiredep(options))
+    //    .pipe($.inject(gulp.src(config.allTheJs), {relative: true}))
+    //    .pipe(gulp.dest(config.destinationOfWiredepedFile)); // Dump the resulting file into this folder
 });
 
 gulp.task('watch', function () {

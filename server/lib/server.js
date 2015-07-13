@@ -118,4 +118,5 @@ var stop = exports.stop = function stop(callback) {
 
 // Start the server
 server = app.listen(config.web.port);
-console.log('server has strated at: ' + config.web.port);
+console.log('server has started at: ' + config.web.port);
+console.log('System running in: ' + config.env  + ' environment.');

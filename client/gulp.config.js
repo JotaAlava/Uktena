@@ -8,8 +8,8 @@ module.exports = function() {
             directory: './bower_components/',
             ignorePath: ''
         },
-        locationOfIndexHtml: './index.html',
-        destinationOfWiredepedFile: './',
+        locationOfIndexHtml: './client/index.html',
+        destinationOfWiredepedFile: './client/index.html',
         allTheJs: '../client//js/**/*.js',
         allTheTestsJs: '../client/**/*.js'
     };

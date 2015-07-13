@@ -1,7 +1,7 @@
 /**
  * Created by Jose on 5/2/2015.
  */
-angular.module('uktena', ['ui.router', 'uktenaHttp'])
+angular.module('uktena', ['ui.router', 'uktenaHttp', 'angular-loading-bar'])
     .config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
             $stateProvider
