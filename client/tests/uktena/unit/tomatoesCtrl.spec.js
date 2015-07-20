@@ -103,7 +103,7 @@ describe('tomatoesCtrl', function(){
         // Act
         scope.createEntry();
         scope.submitEntry('someDescription');
-        $httpBackend.expectPOST("http://localhost:667/tomato").respond('test');
+        $httpBackend.expectPOST("https://secret-plains-7100.herokuapp.com/tomato").respond('test');
         $httpBackend.whenGET("views/main.html").respond('test');
 
         $timeout.flush();

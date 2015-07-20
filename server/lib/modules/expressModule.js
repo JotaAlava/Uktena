@@ -74,8 +74,10 @@ module.exports = function (app, dbToUse, baseRoute, options) {
         app.delete('/' + baseRoute + '/:id', function (req, res) {
             options.authPredicate(req.headers.uktena).then(function (isAuth) {
                 if(isAuth) {
-                    if (req.body.hasOwnProperty('_id')) {
-                        dbToUse.removeById(req.body._id, res);
+                    if (req.params.id) {
+                        dbToUse.removeById(req.params.id, function (response) {
+                            res.send(response);
+                        });
                     } else {
                         dbToUse.removeAll(res);
                     }

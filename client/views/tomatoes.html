@@ -14,7 +14,7 @@
             </h1>
         </div>
         <div class="col s12" style="margin-top: 2%;">
-            <table ng-click="createEntry()" class="hoverable" style="cursor: pointer;">
+            <table class="hoverable" style="cursor: pointer;">
                 <thead>
                 <tr>
                     <th data-field="id" style="width: 200px;">Date</th>
@@ -24,8 +24,9 @@
 
                 <tbody>
                 <tr ng-repeat="tomato in listOfTomatoes()">
-                    <td ng-bind="tomato.dateCreated | date:'medium'"></td>
-                    <td ng-bind="tomato.description"></td>
+                    <td ng-bind="tomato.dateCreated | date:'medium'" ng-click="createEntry()"></td>
+                    <td ng-bind="tomato.description" ng-click="createEntry()"></td>
+                    <td ng-click="deleteEntry(tomato)"><i class="mdi-action-delete"></i></td>
                 </tr>
                 <tr ng-if="listOfTomatoes().length == 0">
                     <td>No work has been logged.</td>
@@ -61,7 +62,7 @@
                                     <label for="first_name">EMail</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="last_name" type="text" class="validate" ng-model="password">
+                                    <input id="last_name" type="password" class="validate" ng-model="password">
                                     <label for="last_name">Password</label>
                                 </div>
                                 <input class="waves-effect waves-light btn right" type="submit" ng-click="logIn(email, password)"/>
@@ -86,7 +87,7 @@
                                     <label for="first_name">EMail</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="last_name" type="text" class="validate" ng-model="newUserPassword">
+                                    <input id="last_name" type="password" class="validate" ng-model="newUserPassword">
                                     <label for="last_name">Password</label>
                                 </div>
                                 <input class="waves-effect waves-light btn right" type="submit" ng-click="register(newUserEmail, newUserPassword)"/>

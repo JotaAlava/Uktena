@@ -2,7 +2,8 @@
  * Created by Jose on 5/2/2015.
  */
 'use strict';
-var authSvc, sandbox, fakePromise, $interval, cookieSvc, $http, feedbackSvc;
+var authSvc, sandbox, fakePromise, $interval, cookieSvc, $http, feedbackSvc,
+    testUrl = 'https://secret-plains-7100.herokuapp.com';
 
 describe("authSvc", function () {
     beforeEach(module('uktena'));
@@ -34,12 +35,19 @@ describe("authSvc", function () {
 
     it('will call cookieSvc to create cookie after calling Log In', function () {
         // Arrange
-        $http.whenPOST('http://localhost:667/login').respond({user: {_id:42}});
+        $http.expectPOST(testUrl + '/login').respond({user: {_id:42}});
         var stub = sandbox.stub(cookieSvc, 'set');
         var stub2 = sandbox.stub(feedbackSvc, 'notify');
+        var dummyParams = {
+            username: 'test',
+            password: 'test'
+        };
+        var dummyPredicate = function () {
+            console.log('hello world!')
+        };
 
         // Act
-        authSvc.logIn();
+        authSvc.logIn(dummyParams, dummyPredicate);
         $http.flush();
 
         // Assert
@@ -48,12 +56,19 @@ describe("authSvc", function () {
 
     it('will notify the user after log in is successful', function () {
         // Arrange
-        $http.whenPOST('http://localhost:667/login').respond({user: {_id:42}});
+        $http.whenPOST(testUrl + '/login').respond({user: {_id:42}});
         var stub = sandbox.stub(feedbackSvc, 'notify');
         var stub2 = sandbox.stub(cookieSvc, 'set');
+        var dummyParams = {
+            username: 'test',
+            password: 'test'
+        };
+        var dummyPredicate = function () {
+            console.log('hello world!')
+        };
 
         // Act
-        authSvc.logIn();
+        authSvc.logIn(dummyParams, dummyPredicate);
         $http.flush();
 
         // Assert
@@ -62,11 +77,18 @@ describe("authSvc", function () {
 
     it('will call the feedbackSvc when the ajax request returns an error', function () {
         // Arrange
-        $http.whenPOST('http://localhost:667/login').respond(500);
+        $http.whenPOST(testUrl + '/login').respond(500);
         var stub = sandbox.stub(feedbackSvc, 'notify');
+        var dummyParams = {
+            username: 'test',
+            password: 'test'
+        };
+        var dummyPredicate = function () {
+            console.log('hello world!')
+        };
 
         // Act
-        authSvc.logIn();
+        authSvc.logIn(dummyParams, dummyPredicate);
         $http.flush();
 
         // Assert

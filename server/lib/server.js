@@ -7,14 +7,19 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     tomatoDb = new MongoRepo(config.mongoConnectionString, config.uktenaDb, config.tomatoCollection),
     userDb = new MongoRepo(config.mongoConnectionString, config.uktenaDb, config.userCollection),
-    q = require('q');
+    q = require('q'),
+    favicon = require('serve-favicon'),
+    path = require('path'),
+    crypto = require('crypto');
+
 
 var cookieParser = require('cookie-parser');
 var app = express();
 var server;
 
 // Configure delivery of CSS and Html files
-app.use(express.static('./../../client/'));
+app.use(favicon(__dirname + '/favicon.ico'));
+app.use(express.static(path.join(__dirname, '../../client')));
 app.use(cookieParser());
 app.use(session({secret:'1'}));
 app.use(passport.initialize());
@@ -80,6 +85,11 @@ app.post('/login', function (req, res, next) {
 app.post('/register', function (req, res, next) {
     userDb.findOne({username:req.body.username}, function (err, user) {
         if (!user && req.body.username && req.body.password) {
+            var salt = createSalt();
+            var securePwd = hasPwd(salt, req.body.password);
+
+            req.body.password = securePwd;
+
             userDb.insert(req.body, function (err, queryResult) {
                 res.send(queryResult.ops[0]);
             });
@@ -116,7 +126,18 @@ var stop = exports.stop = function stop(callback) {
     server.close(callback);
 };
 
+function createSalt() {
+    return crypto.randomBytes(128).toString('base64');
+}
+
+function hasPwd(salt, pwd){
+    var hmac = crypto.createHmac('sha1', salt);
+    return hmac.update(pwd).digest('hex');
+}
+
 // Start the server
-server = app.listen(config.web.port);
-console.log('server has started at: ' + config.web.port);
-console.log('System running in: ' + config.env  + ' environment.');
+server = app.listen(process.env.PORT || 5000, function () {
+    console.log('Dir name is ' + path.join(__dirname, '../../client'));
+    console.log('server has started at: ' + server.address().port);
+    console.log('System running in: ' + config.env  + ' environment.');
+});

@@ -42,7 +42,7 @@ angular.module('uktena')
                     feedbackSvc.notify('Welcome To Uktena');
                 })
                 .error(function (res) {
-                    feedbackSvc.notify('Credentials in use or incomplete!');
+                    feedbackSvc.notify('Credentials taken or incomplete!');
                 });
 
             return deferredResult;

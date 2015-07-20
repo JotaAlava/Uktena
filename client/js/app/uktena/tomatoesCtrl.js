@@ -71,6 +71,13 @@ angular.module('uktena')
             return authSvc.isAuthenticated();
         };
 
+        $scope.deleteEntry = function (tomato) {
+            tomatoesSvc.delete(tomato._id);
+            $timeout(function () {
+                setIsCreatingToFalse();
+            }, 100);
+        };
+
         var expandedCard = {'height': '210px'};
 
         var setIsCreatingToTrue = function () {

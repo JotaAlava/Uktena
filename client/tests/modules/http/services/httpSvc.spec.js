@@ -30,7 +30,7 @@ describe("httpSvc", function () {
         it('should return a promise.', function () {
             // Arrange
             // TODO: Get url for mocks from a central place for all tests
-            $http.whenGET('http://localhost:667/testBaseRoute/someEndPoint').respond(fakePromise);
+            $http.whenGET('https://secret-plains-7100.herokuapp.com/testBaseRoute/someEndPoint').respond(fakePromise);
 
             // Act
             var actualResult = httpSvc.requestWithoutData('get', testEndPoint);
