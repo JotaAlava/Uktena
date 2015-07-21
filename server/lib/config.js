@@ -19,7 +19,7 @@ var config = function () {
             //TODO: Complete this info
             break;
         case 'production':
-            self.mongoConnectionString = MONGO_LABS;
+            self.mongoConnectionString = process.env.MONGO_LABS;
             self.web = {
                 port:process.env.WEB_PORT || 3030
             };
