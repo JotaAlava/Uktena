@@ -7,7 +7,7 @@ var config = function () {
 
     switch (self.env) {
         case 'development':
-            self.mongoConnectionString = 'localhost:27018';
+            self.mongoConnectionString = 'mongodb://admin:Phrygian85@ds045622.mongolab.com:45622/';
             self.web = {
                 port:process.env.WEB_PORT || 3030
             };
@@ -19,7 +19,7 @@ var config = function () {
             //TODO: Complete this info
             break;
         case 'production':
-            self.mongoConnectionString = process.env.MONGO_LABS;
+            self.mongoConnectionString = 'mongodb://admin:Phrygian85@ds047672.mongolab.com:47672/';
             self.web = {
                 port:process.env.WEB_PORT || 3030
             };

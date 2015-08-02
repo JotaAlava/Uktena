@@ -3,46 +3,54 @@
 <div class="container" ng-controller="tomatoesCtrl">
     <div class="row" ng-if="isAuthenticated()">
         <div class="col s12">
-            <h1 class="left">History</h1>
+            <h1 id="TomatoHistoryLabel" class="left">History</h1>
 
             <h1 class="right">
-                <a class="btn-floating btn-large waves-effect waves-light red" style="font-size: 35px"
+                <a id="TomatoCreate" class="btn-floating btn-large waves-effect waves-light red" style="font-size: 35px"
                    ng-if="!isCreating()" ng-click="createEntry()">+</a>
-                <a class="btn-floating btn-large waves-effect waves-light red" style="font-size: 20px"
+                <a id="TomatoCancelCreate" class="btn-floating btn-large waves-effect waves-light red" style="font-size: 20px"
                    ng-if="isCreating()" ng-click="cancelEntry()">x</a>
                 </a>
             </h1>
         </div>
-        <div class="col s12" style="margin-top: 2%;">
-            <table class="hoverable" style="cursor: pointer;">
-                <thead>
-                <tr>
-                    <th data-field="id" style="width: 200px;">Date</th>
-                    <th data-field="name">Description</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr ng-repeat="tomato in listOfTomatoes()">
-                    <td ng-bind="tomato.dateCreated | date:'medium'" ng-click="createEntry()"></td>
-                    <td ng-bind="tomato.description" ng-click="createEntry()"></td>
-                    <td ng-click="deleteEntry(tomato)"><i class="mdi-action-delete"></i></td>
-                </tr>
-                <tr ng-if="listOfTomatoes().length == 0">
-                    <td>No work has been logged.</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
         <div class="col s12 center">
             <form class="input-field col s12" ng-if="isCreating()">
-                <input id="uktena-new-tomato-description" type="text" class="validate" maxlength="250"
+                <input id="UktenaNewTomatoDescription" type="text" class="validate" maxlength="250"
                        ng-model="tomatoDescription">
                 <label for="uktena-new-tomato-description">Description</label>
-                <button type="submit" id="uktena-tomato-done-{{$index}}" class="waves-effect waves-light btn"
+                <button type="submit" id="UktenaDoneTomato-{{$index}}" class="waves-effect waves-light btn"
                         ng-click="submitEntry(tomatoDescription)">Done
                 </button>
             </form>
+        </div>
+        <div class="col s12" style="margin-top: 2%;">
+            <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+                <li ng-repeat="(key, value) in listOfTomatoes()">
+                    <div class="collapsible-header blue white-text"  ng-class="($index===0) ? 'active' : ''">
+                        {{key}}
+                        <span class="right">({{value.length}})</span>
+                    </div>
+                    <div class="collapsible-body blue lighten-3">
+                        <div class="m12 col">
+                            <div class="card">
+                                <div class="card-content row">
+                                    <!--<div class="s12 l3 col">-->
+                                        <!--<img src="{{u.user.picture.medium}}" class="align-right circle">-->
+                                    <!--</div>-->
+                                    <div class="s12 l9 col" ng-repeat="tomato in value | orderBy:'-dateCreated'" ng-click="createEntry()">
+                                        <small>{{tomato.dateCreated | date:'shortTime'}}</small>
+                                        <small ng-if="!isDeleting(tomato)" ng-click="deleteEntry(tomato)" class="right" style="cursor: pointer;"><i class="mdi-action-delete"></i></small>
+                                        <p ng-if="isDeleting(tomato)" ng-click="confirmDeleteEntry(tomato)" class="right" style="cursor: pointer;"><i class="">Delete</i></p>
+                                        <p ng-if="isDeleting(tomato)" ng-click="cancelDeleteEntry(tomato)" class="right"  style="cursor: pointer;"><i class="">Keep</i></p>
+                                        <h5>{{tomato.description}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p ng-if="lengthOfObj(listOfTomatoes()) === 0">No work has been logged.</p>
         </div>
     </div>
     <div class="row" ng-if="!isAuthenticated()">
@@ -53,19 +61,21 @@
                         <span class="card-title activator grey-text text-darken-4" ng-click="setCardStyle('logIn')">Log In</span>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4" ng-click="clearCardStyle('logIn')">Log In</span>
+                        <span class="card-title grey-text text-darken-4"
+                              ng-click="clearCardStyle('logIn')">Log In</span>
 
                         <form class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input id="first_name" type="text" class="validate" ng-model="email">
+                                    <input id="LogInUserEmail" type="text" class="validate" ng-model="email">
                                     <label for="first_name">EMail</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="last_name" type="password" class="validate" ng-model="password">
+                                    <input id="LogInUserPassword" type="password" class="validate" ng-model="password">
                                     <label for="last_name">Password</label>
                                 </div>
-                                <input class="waves-effect waves-light btn right" type="submit" ng-click="logIn(email, password)"/>
+                                <input id="LogInUserButton" class="waves-effect waves-light btn right" type="submit"
+                                       ng-click="logIn(email, password)"/>
                             </div>
                         </form>
                     </div>
@@ -79,18 +89,25 @@
                         <span class="card-title activator grey-text text-darken-4" ng-click="setCardStyle('register')">Register</span>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4" ng-click="clearCardStyle('register')">Register</span>
+                        <span class="card-title grey-text text-darken-4"
+                              ng-click="clearCardStyle('register')">Register</span>
+
                         <form class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input id="first_name" type="text" class="validate" ng-model="newUserEmail">
+                                    <input id="RegisterUserEmail" type="email" class="validate" ng-model="newUserEmail" required>
                                     <label for="first_name">EMail</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="last_name" type="password" class="validate" ng-model="newUserPassword">
+                                    <input id="RegisterUserPassword" type="password" class="validate" ng-model="newUserPassword" required>
                                     <label for="last_name">Password</label>
                                 </div>
-                                <input class="waves-effect waves-light btn right" type="submit" ng-click="register(newUserEmail, newUserPassword)"/>
+                                <div class="input-field col s6">
+                                    <input id="RegisterUserRecoverySecret" type="password" class="validate" ng-model="newUserPasswordSecret" required>
+                                    <label for="last_name">Recovery Secret</label>
+                                </div>
+                                <input id="RegisterUserButton" class="waves-effect waves-light btn right" type="submit"
+                                       ng-click="register(newUserEmail, newUserPassword, newUserPasswordSecret)"/>
                             </div>
                         </form>
                     </div>

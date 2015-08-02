@@ -21,7 +21,9 @@ angular.module('uktena')
                     deferredResult.resolve(res);
 
                     feedbackSvc.notify('Logged in!');
-                    actionToExecutoAfterRequest();
+                    if(actionToExecutoAfterRequest){
+                        actionToExecutoAfterRequest();
+                    };
                 })
                 .error(function (res) {
                     feedbackSvc.notify('Invalid credentials!');

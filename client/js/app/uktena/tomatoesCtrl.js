@@ -2,7 +2,7 @@
  * Created by Jose on 6/4/2015.
  */
 angular.module('uktena')
-    .controller('tomatoesCtrl', ['$scope', 'tomatoesSvc', 'authSvc', '$timeout', function ($scope, tomatoesSvc, authSvc, $timeout) {
+    .controller('tomatoesCtrl', ['$scope', 'tomatoesSvc', 'authSvc', '$timeout', 'feedbackSvc', function ($scope, tomatoesSvc, authSvc, $timeout, feedbackSvc) {
         var isCreating = false;
         $scope.listOfTomatoes = function () {
             return tomatoesSvc.get();
@@ -54,14 +54,27 @@ angular.module('uktena')
             };
 
             authSvc.logIn(params, function () {
-                tomatoesSvc.load();
+                tomatoesSvc.load(onLoadSuccess, onLoadFail);
             });
         };
 
-        $scope.register = function (username, password) {
+        var onLoadSuccess = function (res) {
+            tomatoesSvc.set(res);
+            $timeout(function(){
+                $('.collapsible').collapsible({});
+            },500);
+        };
+
+        var onLoadFail = function () {
+            feedbackSvc.notify('Your session has expired!');
+            authSvc.logOut();
+        };
+
+        $scope.register = function (username, password, secret) {
             var params = {
                 username: username,
-                password: password
+                password: password,
+                passwordSecret: secret
             };
 
             authSvc.register(params);
@@ -71,11 +84,33 @@ angular.module('uktena')
             return authSvc.isAuthenticated();
         };
 
+        var deleteDictionary = {};
+
         $scope.deleteEntry = function (tomato) {
+            if(deleteDictionary[tomato._id] === undefined) {
+                deleteDictionary[tomato._id] = true;
+            } else {
+                deleteDictionary[tomato._id] = !deleteDictionary[tomato];
+            }
+        };
+
+        $scope.cancelDeleteEntry = function (tomato) {
+            deleteDictionary[tomato._id] = false;
+        };
+
+        $scope.confirmDeleteEntry = function (tomato) {
             tomatoesSvc.delete(tomato._id);
             $timeout(function () {
                 setIsCreatingToFalse();
             }, 100);
+        };
+
+        $scope.isDeleting = function (tomato) {
+            return deleteDictionary[tomato._id];
+        };
+
+        $scope.lengthOfObj = function (obj) {
+            return _.size(obj);
         };
 
         var expandedCard = {'height': '210px'};

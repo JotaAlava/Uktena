@@ -2,7 +2,7 @@
  * Created by Jose on 5/2/2015.
  */
 angular.module('uktena')
-    .factory('timerSvc', ['$interval', 'appConfig', function ($timeout, appConfig) {
+    .factory('timerSvc', ['$interval', 'appConfig', '$state', function ($timeout, appConfig, $state) {
         var self = this,
             timerLength = appConfig._25_MINUTES,
             timeoutPromise = null,
@@ -25,6 +25,14 @@ angular.module('uktena')
 
             timeoutPromise = $timeout(function () {
                 timerLength = timerLength - 1000;
+
+                if(timerLength === 0){
+                    self.stopTimer();
+                    alert('Your tomato has ended! Log the work completed.');
+                    // TODO: Figure out how to play a sound!
+                    $state.go('tomatoes'); // TODO: Make constant
+                }
+
             }, 1000);
 
             enableIsRunningFlag();
@@ -49,7 +57,8 @@ angular.module('uktena')
             var numminutes = Math.floor((((milliseconds % 31536000) % 86400) % 3600) / 60);
             var numseconds = (((milliseconds % 31536000) % 86400) % 3600) % 60;
 
-            if (numseconds === 0) numseconds = '00';
+            if (numseconds >= 0 && numseconds < 10) numseconds = '0' + numseconds;
+            if (numminutes >= 0 && numminutes < 10) numminutes = '0' + numminutes;
 
             return numminutes + ":" + numseconds;
         };

@@ -15,6 +15,7 @@ var gutil = require('gulp-util');
  * Run test once and exit
  */
 gulp.task('test', function (done) {
+    console.log("Tests broken due to: https://github.com/chieffancypants/angular-loading-bar/issues/123")
     karma.start({
         configFile: __dirname + '/../client/karma.conf.js',
         singleRun: true

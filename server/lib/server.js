@@ -10,8 +10,8 @@ var express = require('express'),
     q = require('q'),
     favicon = require('serve-favicon'),
     path = require('path'),
-    crypto = require('crypto');
-
+    crypto = require('crypto'),
+    validator = require('validator');
 
 var cookieParser = require('cookie-parser');
 var app = express();
@@ -84,7 +84,7 @@ app.post('/login', function (req, res, next) {
 
 app.post('/register', function (req, res, next) {
     userDb.findOne({username:req.body.username}, function (err, user) {
-        if (!user && req.body.username && req.body.password) {
+        if (!user && req.body.username && req.body.password && req.body.passwordSecret && validator.isEmail(req.body.username)) {
             var salt = createSalt();
             var securePwd = hasPwd(salt, req.body.password);
 

@@ -21,6 +21,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-loading-bar/src/loading-bar.js',
+      'bower_components/angular-animate/angular-animate.js',
       'js/testingHelpers.js',
       'js/app/modules/http/uktenaHttp.js',
       'js/app/modules/http/services/httpSvc.js',

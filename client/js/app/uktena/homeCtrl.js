@@ -16,13 +16,6 @@ angular.module('uktena')
 
         $scope.timeLeft = function () {
             var timeLeft = timerSvc.getPrettyTimeLeft();
-            if (timeLeft === '0:00' && timerSvc.isRunning())
-            {
-                timerSvc.stopTimer();
-                alert('Your tomato has ended! Log the work completed.');
-                // TODO: Figure out how to play a sound!
-                $state.go('tomatoes'); // TODO: Make constant
-            }
 
             return timeLeft;
         };

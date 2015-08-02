@@ -13,7 +13,7 @@ angular.module('uktenaHttp')
                 url: apiUrl + url
             };
 
-            if(headers !== undefined) {
+            if (headers !== undefined) {
                 options.headers = headers
             }
 
@@ -27,7 +27,7 @@ angular.module('uktenaHttp')
                 data: data
             };
 
-            if(headers !== undefined) {
+            if (headers !== undefined) {
                 options.headers = headers
             }
 
@@ -41,7 +41,7 @@ angular.module('uktenaHttp')
                 params: data
             };
 
-            if(headers !== undefined) {
+            if (headers !== undefined) {
                 options.headers = headers
             }
 

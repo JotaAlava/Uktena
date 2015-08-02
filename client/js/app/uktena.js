@@ -13,9 +13,21 @@ angular.module('uktena', ['ui.router', 'uktenaHttp', 'angular-loading-bar'])
                     url: '/tomatoes',
                     templateUrl: 'views/tomatoes.html',
                     controller: 'tomatoesCtrl',
-                    onEnter: function (tomatoesSvc, authSvc) {
+                    onEnter: function (tomatoesSvc, authSvc, feedbackSvc, $timeout) {
+                        var onLoadSuccess = function (res) {
+                            tomatoesSvc.set(res);
+                            $timeout(function(){
+                                $('.collapsible').collapsible({});
+                            },500);
+                        };
+
+                        var onLoadFail = function () {
+                            feedbackSvc.notify('Your session has expired!');
+                            authSvc.logOut();
+                        };
+
                         if (authSvc.isAuthenticated()) {
-                            tomatoesSvc.load();
+                            tomatoesSvc.load(onLoadSuccess, onLoadFail);
                         }
                     }
                 });
