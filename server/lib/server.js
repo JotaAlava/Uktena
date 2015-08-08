@@ -136,7 +136,7 @@ function hasPwd(salt, pwd){
 }
 
 // Start the server
-server = app.listen(process.env.PORT || 5000, function () {
+server = app.listen(process.env.PORT || 3030, function () {
     console.log('Dir name is ' + path.join(__dirname, '../../client'));
     console.log('server has started at: ' + server.address().port);
     console.log('System running in: ' + config.env  + ' environment.');

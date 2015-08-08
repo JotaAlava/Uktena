@@ -43,20 +43,6 @@ describe('homeCtrl', function(){
 
     // TODO: Figure out how to verify that the methods are called in the expected order
 
-    it('timeLeft will stop the timer if the value from the service is at 0', function() {
-        // Arrange
-        sandbox.stub(timerSvc, 'getPrettyTimeLeft').returns('0:00');
-        sandbox.stub(timerSvc, 'stopTimer');
-        sandbox.stub(timerSvc, 'isRunning').returns(true);
-
-        // Act
-        scope.timeLeft();
-
-        // Assert
-        expect(timerSvc.getPrettyTimeLeft.calledOnce).to.equal(true);
-        expect(timerSvc.stopTimer.calledOnce).to.equal(true);
-    });
-
     it('timeLeft will NOT stop the timer if the value from the service is at 0:01', function() {
         // Arrange
         sandbox.stub(timerSvc, 'getPrettyTimeLeft').returns('0:01');
@@ -160,19 +146,5 @@ describe('homeCtrl', function(){
 
         // Assert
         expect(timerSvc.startTimer.calledOnce).to.equal(true);
-    });
-
-    it('timeLeft will re-route the user to the tomatoes state', function() {
-        // Arrange
-        sandbox.stub(timerSvc, 'getPrettyTimeLeft').returns('0:00');
-        sandbox.stub(timerSvc, 'stopTimer');
-        sandbox.stub(timerSvc, 'isRunning').returns(true);
-        sandbox.stub($state, 'go');
-
-        // Act
-        scope.timeLeft();
-
-        // Assert
-        expect($state.go.withArgs('tomatoes').calledOnce).to.equal(true);
     });
 });

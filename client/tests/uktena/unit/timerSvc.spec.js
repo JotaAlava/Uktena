@@ -5,7 +5,7 @@
  * Created by Jose on 4/11/2015.
  */
 'use strict';
-var timerSvc, sandbox, fakePromise, $interval,
+var timerSvc, sandbox, fakePromise, $interval, $state,
     testEndPoint = 'testBaseRoute/someEndPoint',
     testBaseUrl = 'http://localhost:3579/';
 
@@ -17,6 +17,7 @@ describe("timerSvc", function () {
         fakePromise = sinon.stub(generateFakePromise());
         $interval = $injector.get('$interval');
         timerSvc = $injector.get('timerSvc');
+        $state = $injector.get('$state');
     }));
 
     afterEach(function () {
@@ -74,6 +75,14 @@ describe("timerSvc", function () {
         // Assert
         timerSvc.isRunning().should.equal(false);
         // Will not go into testing the details of the object because I assume the angular team tested the shit out of $timeout
+    });
+
+    it('stopTimer will navigate to the tomato screen after timer is up', function () {
+        // TODO: Figure out how to test async callback exection. NOTE: This is key for testing server side code as well!
+    });
+
+    it('stopTimer will stop the timer if the value from the service is at 0', function () {
+        // TODO: Figure out how to test async callback exection. NOTE: This is key for testing server side code as well!
     });
 
     it('isRunning will return a flag that tracks if the timer has been started or not - by default is false', function () {

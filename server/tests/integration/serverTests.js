@@ -52,7 +52,7 @@ describe('tomato service', function () {
             });
     }
 
-    it('will find route tomato and return an empty array', function (done) {
+    xit('will find route tomato and return an empty array', function (done) {
         request
             .get(baseUrl + '/tomato')
             .on('error', deleteAll)
@@ -66,7 +66,7 @@ describe('tomato service', function () {
             });
     });
 
-    it('should create a tomato', function (done) {
+    xit('should create a tomato', function (done) {
         var expectedDescription = 'testDescription',
             expectedDate = new Date(),
             testTomato = new TomatoCtor(expectedDescription, expectedDate);
